@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .font-glitch {
+    font-family: 'Orbitron', monospace;
+  }
+
+  .glitch {
+    position: relative;
+    color: #ff00ff;
+    font-weight: bold;
+    animation: glitch-animation 1s infinite linear alternate-reverse;
+  }
+
+  .glitch::before,
+  .glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .glitch::before {
+    text-shadow: 2px 0 #00ffff;
+    animation: glitchTop 1s infinite linear alternate-reverse;
+  }
+
+  .glitch::after {
+    text-shadow: -2px 0 #ff00ff;
+    animation: glitchBottom 1s infinite linear alternate-reverse;
+  }
+
+  @keyframes glitch-animation {
+    0% { transform: translate(0, 0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(-2px, -2px); }
+    60% { transform: translate(2px, 2px); }
+    80% { transform: translate(2px, -2px); }
+    100% { transform: translate(0, 0); }
+  }
+
+  @keyframes glitchTop {
+    0% { clip: rect(0, 9999px, 0, 0); }
+    100% { clip: rect(0, 9999px, 20px, 0); transform: translate(3px, -3px); }
+  }
+
+  @keyframes glitchBottom {
+    0% { clip: rect(0, 9999px, 0, 0); }
+    100% { clip: rect(10px, 9999px, 9999px, 0); transform: translate(-3px, 3px); }
+  }
+}
+
+body {
+  @apply font-glitch text-white min-h-screen;
+  background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e, #000);
+  background-size: 400% 400%;
+  animation: gradientGlitch 15s ease infinite;
+}
+
+@keyframes gradientGlitch {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
